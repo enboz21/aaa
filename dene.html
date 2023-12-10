@@ -40,11 +40,16 @@
         <button onclick="setCountdown()">BAŞLAT</button>
         <button onclick="decreaseMinutes()">-</button>
     </div>
-    <button id="bt1" onclick="">DURDUR</button>
+    <button id="bt1" onclick="dur()">DURDUR</button>
 
     <script>
         var count = 60; //başlangıç deyeri
         var acaba = 0;
+
+        function dur() {
+            acaba = 0;
+            count = 0;
+        }
 
         function startCountdown() {
             var countdownElement = document.getElementById('countdown');
@@ -55,6 +60,7 @@
                 if (count <= 0) {
                     clearInterval(countdownInterval);
                     countdownElement.textContent = "Time's up!";
+                    count = 0;
                     acaba = 0;
                 }
             }, 1000);
