@@ -1,106 +1,37 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ayarlı sayaç</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            background-color: black;
-        }
-        
-        #countdown {
-            font-size: 36px;
-            font-weight: bold;
-            color: rgb(212, 255, 0);
-        }
-        
-        .buttonlar {
-            margin-top: 20px;
-        }
-        
-        #bt1 {
-            width: auto;
-        }
-    </style>
+    <title>Text Dosyası Oluştur</title>
 </head>
-
 <body>
-
-
-
-    <div id="countdown">1:00</div>
-
-    <div class="buttonlar">
-        <button onclick="increaseMinutes()">+</button>
-        <button onclick="setCountdown()">BAŞLAT</button>
-        <button onclick="decreaseMinutes()">-</button>
-    </div>
-    <button id="bt1" onclick="dur()">DURDUR</button>
-
+    <button onclick="createTextFile()">Text Dosyası Oluştur</button>
+    
     <script>
-        var count = 60; //başlangıç deyeri
-        var acaba = 0;
-
-        function dur() {
-            acaba = 0;
-            count = 0;
-        }
-
-        function startCountdown() {
-            var countdownElement = document.getElementById('countdown');
-            var countdownInterval = setInterval(function() {
-                count--;
-                countdownElement.textContent = formatTime(count);
-
-                if (count <= 0) {
-                    clearInterval(countdownInterval);
-                    countdownElement.textContent = "Time's up!";
-                    count = 0;
-                    acaba = 0;
-                }
-            }, 1000);
-        }
-
-        function setCountdown() {
-            if (acaba == 0) {
-                startCountdown();
-                acaba++;
-            }
-        }
-
-        function formatTime(seconds) {
-            var minutes = Math.floor(seconds / 60);
-            var remainingSeconds = seconds % 60;
-
-            if (remainingSeconds < 10) {
-                remainingSeconds = "0" + remainingSeconds;
-            }
-
-            return minutes + ":" + remainingSeconds;
-        }
-
-        function increaseMinutes() {
-            if (acaba == 0) {
-                count += 60;
-                document.getElementById('countdown').textContent = formatTime(count);
-            }
-        }
-
-        function decreaseMinutes() {
-            if (acaba == 0) {
-                if (count >= 120) { // At least 2 minutes must remain
-                    count -= 60;
-                    document.getElementById('countdown').textContent = formatTime(count);
-                }
-            }
+        function createTextFile() {
+            // Dosya içeriği
+            const text = "merhaba dünya";
+            
+            // Blob oluştur
+            const blob = new Blob([text], { type: "text/plain" });
+            
+            // Geçici bir URL oluştur
+            const url = URL.createObjectURL(blob);
+            
+            // İndirme için bir bağlantı oluştur
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "dosya.txt";
+            
+            // Bağlantıyı simüle ederek tıklat
+            document.body.appendChild(a);
+            a.click();
+            
+            // Temizlik yap
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
     </script>
-
 </body>
-
 </html>
